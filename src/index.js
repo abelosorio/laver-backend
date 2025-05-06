@@ -1,6 +1,5 @@
 import { createServer } from 'http'
 
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 
@@ -12,6 +11,7 @@ import '~/sequelize/index.js'
   const corsOriginsRegex = new RegExp(ALLOWED_CORS_ORIGINS_REGEX ?? /^\b$/)
   const app = express()
 
+  app.use(express.json())
   app.set('trust proxy', 1)
   app.use(
     cors({
@@ -20,8 +20,6 @@ import '~/sequelize/index.js'
       exposedHeaders: ['Content-Disposition']
     })
   )
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
 
   const httpServer = createServer(app)
   const graphQLServer = await createGraphQLServer(app)

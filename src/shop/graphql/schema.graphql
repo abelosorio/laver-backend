@@ -1,0 +1,8 @@
+type Shop {
+  id: UUID!
+  name: String!
+  address: String!
+  profilePicture: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
