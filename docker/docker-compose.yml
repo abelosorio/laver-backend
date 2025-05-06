@@ -1,0 +1,36 @@
+services:
+  laver-backend-db:
+    container_name: laver-backend-db
+    build:
+        context: ./
+        dockerfile: backend-db.Dockerfile
+    ports:
+      - '5432:5432'
+    environment:
+      - PAGER=less -S
+      - POSTGRES_DB=laver
+      - POSTGRES_USER=laver
+      - POSTGRES_PASSWORD=laver
+
+  laver-firebase-emulators:
+    container_name: laver-firebase-emulators
+    build:
+        context: ./
+        dockerfile: firebase.Dockerfile
+    volumes:
+        - /var/tmp/local-firebase/emulators/:/opt/workspace
+        - /var/tmp/local-firebase/bin/:/root/.cache:cached
+        - /var/tmp/local-firebase/config/:/root/.config:cached
+    environment:
+        - STORAGE_EMULATOR_DEBUG=true
+    ports:
+        - 4000:4000 # Emulator Suite UI
+        - 5000:5000 # Firebase Hosting
+        - 5001:5001 # Clound Functions
+        - 9000:9000 # Realtime Database
+        - 9099:9099 # Auth emulator
+        - 8080:8080 # Cloud Firestore
+        - 8085:8085 # Cloud Pub/Sub
+        - 9199:9199 # Storage
+    working_dir: /opt/workspace
+    command: ['bash', './run_emulators.sh']

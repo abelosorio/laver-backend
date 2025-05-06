@@ -1,0 +1,42 @@
+{
+  "name": "laver-backend",
+  "packageManager": "yarn@4.3.1",
+  "aliases": {
+    "~": "./src"
+  },
+  "type": "module",
+  "workspaces": [
+    "docker"
+  ],
+  "scripts": {
+    "start": "yarn node_dev ./src/index.js",
+    "dev": "nodemon --require dotenv/config --loader esm-module-alias/loader --no-warnings --ext js,graphql,handlebars src/index.js",
+    "dev:docker": "yarn workspace docker dev & yarn dev",
+    "node_dev": "node --loader esm-module-alias/loader --no-warnings",
+    "lint": "eslint .",
+    "generate:migration": "yarn sequelize-cli migration:create --name ",
+    "migrate": "yarn node_dev ./src/sequelize/migrator/migrate.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.10.4",
+    "@graphql-tools/merge": "^8.4.0",
+    "@graphql-tools/schema": "^10.0.23",
+    "apollo-server-express": "^3.13.0",
+    "esm-module-alias": "^2.2.1",
+    "express": "^4.19.2",
+    "firebase-admin": "^13.3.0",
+    "globby": "^14.0.2",
+    "graphql": "^16.11.0",
+    "graphql-scalars": "^1.23.0",
+    "pg": "^8.15.6",
+    "sequelize": "^6.37.7",
+    "umzug": "^3.8.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.5.0",
+    "lodash-es": "^4.17.21",
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.2"
+  }
+}

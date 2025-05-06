@@ -1,0 +1,9 @@
+{
+  "name": "docker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "pre-dev": "mkdir -p /var/tmp/local-firebase && rsync -r ./firebase/* /var/tmp/local-firebase",
+    "dev": "yarn pre-dev && docker-compose up"
+  }
+}

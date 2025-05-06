@@ -1,0 +1,32 @@
+FROM node:20.15.0-alpine
+
+# Add build arguments
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+ARG DB_HOST
+ARG DB_PORT
+ARG ENVIRONMENT
+ARG ALLOWED_CORS_ORIGINS_REGEX
+
+# Set environment variables from build arguments
+ENV DB_NAME=${DB_NAME}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV ALLOWED_CORS_ORIGINS_REGEX=${ALLOWED_CORS_ORIGINS_REGEX}
+ENV NODE_ENV=production
+ENV PORT=3000
+
+WORKDIR /app
+COPY . .
+
+# Install dependencies and run migrations
+RUN yarn install && \
+    yarn migrate up
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]

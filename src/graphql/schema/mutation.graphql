@@ -1,0 +1,9 @@
+type Mutation {
+  _empty: String
+}
+
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+}

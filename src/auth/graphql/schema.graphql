@@ -1,0 +1,7 @@
+extend type Mutation {
+  signup(idToken: String!): User!
+}
+
+extend type Query {
+  currentUser: User
+}
